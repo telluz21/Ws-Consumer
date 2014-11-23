@@ -1,0 +1,37 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ImplLoginService WSDL service -->
+
+  <service name="ImplLogin" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://Service.ws.channaleitorcodes.com"/>
+      <parameter name="wsdlServiceElement" value="ImplLoginService"/>
+      <parameter name="schemaQualified" value="http://Service.ws.channaleitorcodes.com,http://bean.ws.channaleitorcodes.com"/>
+      <parameter name="wsdlServicePort" value="ImplLogin"/>
+      <parameter name="className" value="com.channaleitorcodes.ws.Service.ImplLoginSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="ImplLogin"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="validaLogin" qname="operNS:validaLogin" xmlns:operNS="http://Service.ws.channaleitorcodes.com" returnQName="retNS:validaLoginReturn" xmlns:retNS="http://Service.ws.channaleitorcodes.com" returnType="rtns:BeanLogin" xmlns:rtns="http://bean.ws.channaleitorcodes.com" soapAction="" >
+        <parameter qname="pns:obj" xmlns:pns="http://Service.ws.channaleitorcodes.com" type="tns:BeanLogin" xmlns:tns="http://bean.ws.channaleitorcodes.com"/>
+      </operation>
+      <parameter name="allowedMethods" value="validaLogin"/>
+
+      <typeMapping
+        xmlns:ns="http://bean.ws.channaleitorcodes.com"
+        qname="ns:BeanLogin"
+        type="java:com.channaleitorcodes.ws.bean.BeanLogin"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
